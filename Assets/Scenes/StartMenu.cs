@@ -29,15 +29,15 @@ public class StartMenu : MonoBehaviour {
 		// Make a background box
 
 		//GUI.Box(new Rect(10,10,100,90), "START MENU");
+//
+//		GUI.Label(new Rect (screenCenterX-titleWidth/2, screenCenterY-titleHeight/2, titleWidth, titleHeight), 
+//		          "GROCKS");
 
-		GUI.Label(new Rect (screenCenterX-titleWidth/2, screenCenterY-titleHeight/2, titleWidth, titleHeight), 
-		          "GROCKS");
-
-		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 265, buttonWidth, buttonHeight), "Start")) {
+		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 285, buttonWidth, buttonHeight), "Start")) {
 			Application.LoadLevel("Arena_Eric");
 		}
 
-		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 325, buttonWidth, buttonHeight), "Quit")) {
+		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 345, buttonWidth, buttonHeight), "Quit")) {
 			Application.Quit();
 		}
 	}
