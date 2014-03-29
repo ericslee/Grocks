@@ -18,7 +18,7 @@ public class ReplayMenu : MonoBehaviour {
 	void Start () {
 		gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
-		currentWinner = "shlane";
+		//currentWinner = "shlane";
 	}
 	
 	// Update is called once per frame
@@ -35,7 +35,9 @@ public class ReplayMenu : MonoBehaviour {
 	}
 	
 	void OnGUI() {
-		
+
+		//Debug.Log ("ON GUI " + currentWinner); 
+
 		GUI.skin = customSkin;
 		
 		GUI.Label(new Rect (screenCenterX-titleWidth/2, screenCenterY-titleHeight/2, titleWidth, titleHeight), 
