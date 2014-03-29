@@ -34,7 +34,7 @@ public class StartMenu : MonoBehaviour {
 		          "GROCKS");
 
 		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 265, buttonWidth, buttonHeight), "Start")) {
-			Application.LoadLevel("Arena_1");
+			Application.LoadLevel("Arena_Eric");
 		}
 
 		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 325, buttonWidth, buttonHeight), "Quit")) {
