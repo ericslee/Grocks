@@ -23,7 +23,7 @@ public class TerrainBlock : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider youHitMe) {
+	void OnCollisionEnter(Collision hit) {
 		HP--;
 	}
 }
