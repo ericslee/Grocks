@@ -30,4 +30,9 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	public void setCurrentWinner(string thisGuyWins) {
+		replayMenu.GetComponent<ReplayMenu> ().SetCurrentWinner (thisGuyWins);
+		//ShowReplayMenu ();
+	}
 }

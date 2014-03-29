@@ -5,6 +5,7 @@ public class ReplayMenu : MonoBehaviour {
 	
 	public GUISkin customSkin;
 	private GameManager gameManager;
+	private string currentWinner; 
 
 	int screenCenterX = Screen.width/2;
 	int screenCenterY = Screen.height/2;
@@ -16,6 +17,8 @@ public class ReplayMenu : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
+		currentWinner = "shlane";
 	}
 	
 	// Update is called once per frame
@@ -36,7 +39,7 @@ public class ReplayMenu : MonoBehaviour {
 		GUI.skin = customSkin;
 		
 		GUI.Label(new Rect (screenCenterX-titleWidth/2, screenCenterY-titleHeight/2, titleWidth, titleHeight), 
-		          "Player 1 wins!");
+		          currentWinner + " wins!");
 		
 		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 265, buttonWidth, buttonHeight), "Replay")) {
 			gameManager.Reset();
@@ -45,5 +48,11 @@ public class ReplayMenu : MonoBehaviour {
 		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 325, buttonWidth, buttonHeight), "Quit")) {
 			Application.Quit();
 		}
+	}
+
+	public void SetCurrentWinner(string thisGuyWins) {
+		currentWinner = thisGuyWins;
+		Debug.Log (currentWinner);
+		Show ();
 	}
 }
