@@ -58,6 +58,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision collision) {
+
 		if (collision.gameObject.tag == "Ceiling") {
 			dir = -1;
 			changedGravity = false;
@@ -70,5 +71,17 @@ public class Player : MonoBehaviour {
 			inAir = false;
 			//rigidbody.velocity = Vector3.zero;
 		}
+	}
+
+	public void setInAir(bool isItInAir) {
+		inAir = isItInAir;
+	}
+
+	public bool isInAir() {
+		return inAir;
+	}
+
+	public void invertDir() {
+		dir = -dir;
 	}
 }

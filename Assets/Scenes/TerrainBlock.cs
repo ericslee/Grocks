@@ -5,6 +5,7 @@ public class TerrainBlock : MonoBehaviour {
 
 	public int HP;
 	private float HPmax;
+	private GameObject sitter;
 
 	// Use this for initialization
 	void Start () {
@@ -20,10 +21,13 @@ public class TerrainBlock : MonoBehaviour {
 
 		if (HP == 0) {
 			Destroy (gameObject);
+			sitter.GetComponent<Player>().setInAir(true);
+			sitter.GetComponent<Player>().invertDir();
 		}
 	}
 
 	void OnCollisionEnter(Collision hit) {
 		HP--;
+		sitter = hit.gameObject;
 	}
 }
