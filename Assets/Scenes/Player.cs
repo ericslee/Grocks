@@ -26,7 +26,7 @@ public class Player : MonoBehaviour {
 
 		// constantly apply to vertical force when in the air
 		if (inAir) {
-			rigidbody.AddForce(0, dir * 200.0f, 0);
+			rigidbody.AddForce(0, dir * 20.0f, 0);
 		}
 
 		// add force on button press
@@ -58,14 +58,30 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision collision) {
+		/* calculate difference between center of this and center of collision object */
+		// get center point Ys
+		float otherY = collision.transform.position.y;
+		float thisY = this.gameObject.transform.position.y;
+		// get heights of objects
+		float otherH = collision.transform.localScale.y / 2;
+		float thisH = this.transform.localScale.y / 2;
 
-		if (collision.gameObject.tag == "Ceiling") {
+		bool collidingOnSide = false;
+
+		if (Mathf.Abs(thisY - otherY) + 0.1 < thisH + otherH) {
+			Debug.Log(thisH + otherH + " height difference"); // TODO
+			Debug.Log(Mathf.Abs(thisY - otherY) + 0.1 + " centerpoint difference"); // TODO
+			collidingOnSide = true;
+
+		}
+
+		if (collision.gameObject.tag == "Ceiling" && !collidingOnSide) {
 			dir = -1;
 			changedGravity = false;
 			inAir = false;
 			//rigidbody.velocity = Vector3.zero;
 		}
-		else if (collision.gameObject.tag == "Floor") {
+		else if (collision.gameObject.tag == "Floor" && !collidingOnSide) {
 			dir = 1;
 			changedGravity = false;
 			inAir = false;
