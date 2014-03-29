@@ -23,11 +23,11 @@ public class TerrainBlock : MonoBehaviour {
 		if (HP == 0) {
 			Destroy (gameObject);
 			// THIS IS BAD FIX IT (maybe)
-			sitter.GetComponent<Player>().setInAir(true);
+			//sitter.GetComponent<Player>().setInAir(true);
 			//sitter.GetComponent<Player>().invertDir();
-			if (this.tag == "Ceiling") sitter.GetComponent<Player>().setDir(1);
-			if (this.tag == "Floor") sitter.GetComponent<Player>().setDir(-1);
-			sitter.GetComponent<Player>().changedGravity = false;
+			//if (this.tag == "Ceiling") sitter.GetComponent<Player>().setDir(1);
+			//if (this.tag == "Floor") sitter.GetComponent<Player>().setDir(-1);
+			//sitter.GetComponent<Player>().changedGravity = false;
 
 		}
 	}
@@ -35,8 +35,8 @@ public class TerrainBlock : MonoBehaviour {
 	void OnCollisionEnter(Collision hit) {
 		HP--;
 		sitter = hit.gameObject;
-		if (this.tag == "Ceiling") sitter.GetComponent<Player>().setDir(-1);
-		if (this.tag == "Floor") sitter.GetComponent<Player>().setDir(1);
+		//if (this.tag == "Ceiling") sitter.GetComponent<Player>().setDir(-1);
+		//if (this.tag == "Floor") sitter.GetComponent<Player>().setDir(1);
 		//if (HP > 0) sitter.GetComponent<Player>().setInAir(false);
 
 

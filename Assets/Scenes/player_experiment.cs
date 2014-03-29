@@ -8,11 +8,30 @@ public class player_experiment : MonoBehaviour {
 	private Vector3 rightSpeed = new Vector3(0, 0, 30.0f);
 	public float bounceTimer;
 
+	private KeyCode keyUp;
+	private KeyCode keyDown;
+	private KeyCode keyRight;
+	private KeyCode keyLeft;
+
 	// Use this for initialization
 	void Start () {
 		dir = -1;
 		inAir = false;
 		bounceTimer = 0;
+
+		// Assign player keys
+		if(tag == "Player1") {
+			keyUp = KeyCode.W;
+			keyDown = KeyCode.S;
+			keyRight = KeyCode.D;
+			keyLeft = KeyCode.A;
+		}
+		else if(tag == "Player2") {
+			keyUp = KeyCode.UpArrow;
+			keyDown = KeyCode.DownArrow;
+			keyRight = KeyCode.RightArrow;
+			keyLeft = KeyCode.LeftArrow;
+		}
 	}
 	
 	// Update is called once per frame
@@ -27,27 +46,27 @@ public class player_experiment : MonoBehaviour {
 		}
 		if (inAir) rigidbody.AddForce(0, dir * 300.0f, 0);
 
-
-		if (Input.GetKey ("a") && inAir && bounceTimer < 1) {
+		// move left and right
+		if (Input.GetKey (keyLeft) && inAir && bounceTimer < 1) {
 			rigidbody.MovePosition(rigidbody.position + leftSpeed * Time.deltaTime);
 			
 			// remove horizontal velocity if player moves in air after collision
 			rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
 		}
-		// move left and right
-		if (Input.GetKey ("d") && inAir && bounceTimer < 1) {
+
+		if (Input.GetKey (keyRight) && inAir && bounceTimer < 1) {
 			rigidbody.MovePosition(rigidbody.position + rightSpeed * Time.deltaTime);
 			
 			// remove horizontal velocity if player moves in air after collision
 			rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
 		}
 
-		if (Input.GetKeyDown ("w") && !inAir && dir < 0) {
+		if (Input.GetKeyDown (keyUp) && !inAir && dir < 0) {
 			//rigidbody.AddForce(0, 500.0f, 0);
 			dir = 1;
 			inAir = true;
 		}
-		if (Input.GetKeyDown ("s") && !inAir && dir > 0) {
+		if (Input.GetKeyDown (keyDown) && !inAir && dir > 0) {
 			//rigidbody.AddForce(0, -500.0f, 0);
 			dir = -1;
 			inAir = true;
