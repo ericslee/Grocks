@@ -6,6 +6,7 @@ public class TerrainBlock : MonoBehaviour {
 	public int HP;
 	private float HPmax;
 	private GameObject sitter;
+	public GameObject rock_HitPrefab;
 
 	// Use this for initialization
 	void Start () {
@@ -29,5 +30,13 @@ public class TerrainBlock : MonoBehaviour {
 	void OnCollisionEnter(Collision hit) {
 		HP--;
 		sitter = hit.gameObject;
+
+		if(rock_HitPrefab) {
+			foreach (ContactPoint contact in hit.contacts) {
+				//Debug.DrawRay(contact.point, contact.normal, Color.white);
+				GameObject rocks = (GameObject)Instantiate(rock_HitPrefab, contact.point, Quaternion.identity);
+				Destroy(rocks, 1.0f);
+			}
+		}
 	}
 }
