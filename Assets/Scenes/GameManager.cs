@@ -11,6 +11,11 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+	// here is where you would reset the game state after someone replays or on init
+	void Reset() {
+		Debug.Log ("Game reset");
+	}
+
 	// TODO: when brought into main arena, attach prefab to public var in inspector
 	void CreateRestartMenu() {
 		restartMenu = (GameObject)(GameObject.Instantiate(restartMenuPrefab));
