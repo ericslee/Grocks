@@ -11,12 +11,31 @@ public class Player : MonoBehaviour {
 	public bool changedGravity;
 	private float bounceTimer;
 
+	private KeyCode keyUp;
+	private KeyCode keyDown;
+	private KeyCode keyRight;
+	private KeyCode keyLeft;
+
 	// Use this for initialization
 	void Start () {
 		inAir = false;
 		dir = 1;
 		changedGravity = false;
 		bounceTimer = 0;
+
+		// Assign player keys
+		if(tag == "Player1") {
+			keyUp = KeyCode.W;
+			keyDown = KeyCode.S;
+			keyRight = KeyCode.D;
+			keyLeft = KeyCode.A;
+		}
+		else if(tag == "Player2") {
+			keyUp = KeyCode.UpArrow;
+			keyDown = KeyCode.DownArrow;
+			keyRight = KeyCode.RightArrow;
+			keyLeft = KeyCode.LeftArrow;
+		}
 	}
 
 	// Update is called once per frame
@@ -36,26 +55,26 @@ public class Player : MonoBehaviour {
 		}
 
 		// add force on button press
-		if (Input.GetKeyDown ("w") && !changedGravity && dir > 0) {
+		if (Input.GetKeyDown (keyUp) && !changedGravity && dir > 0) {
 			rigidbody.AddForce(0, 500.0f, 0);
 			changedGravity = true;
 			inAir = true;
 		}
-		if (Input.GetKeyDown ("s") && !changedGravity && dir < 0) {
+		if (Input.GetKeyDown (keyDown) && !changedGravity && dir < 0) {
 			rigidbody.AddForce(0, -500.0f, 0);
 			changedGravity = true;
 			inAir = true;
 		}
 
 		// move left and right
-		if (Input.GetKey ("a") && inAir && bounceTimer < 1) {
+		if (Input.GetKey (keyLeft) && inAir && bounceTimer < 1) {
 			rigidbody.MovePosition(rigidbody.position + leftSpeed * Time.deltaTime);
 
 			// remove horizontal velocity if player moves in air after collision
 			rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
 		}
 		// move left and right
-		if (Input.GetKey ("d") && inAir && bounceTimer < 1) {
+		if (Input.GetKey (keyRight) && inAir && bounceTimer < 1) {
 			rigidbody.MovePosition(rigidbody.position + rightSpeed * Time.deltaTime);
 
 			// remove horizontal velocity if player moves in air after collision
