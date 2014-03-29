@@ -6,9 +6,9 @@ public class Player : MonoBehaviour {
 	private Vector3 leftSpeed = new Vector3(0, 0, -30.0f);
 	private Vector3 rightSpeed = new Vector3(0, 0, 30.0f);
 
-	private bool inAir;
-	private int dir; // -1 is facing upside down (on the ceiling), 1 is facing rightside up (on the floor)
-	private bool changedGravity;
+	public bool inAir;
+	public int dir; // -1 is facing upside down (on the ceiling), 1 is facing rightside up (on the floor)
+	public bool changedGravity;
 	private float bounceTimer;
 
 	// Use this for initialization
@@ -115,7 +115,7 @@ public class Player : MonoBehaviour {
 		return inAir;
 	}
 
-	public void invertDir() {
-		dir = -dir;
+	public void setDir(int newdir) {
+		dir = newdir;
 	}
 }
