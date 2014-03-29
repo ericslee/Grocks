@@ -30,12 +30,12 @@ public class Player : MonoBehaviour {
 		}
 
 		// add force on button press
-		if (Input.GetKeyDown ("w") && !changedGravity) {
+		if (Input.GetKeyDown ("w") && !changedGravity && dir > 0) {
 			rigidbody.AddForce(0, 500.0f, 0);
 			changedGravity = true;
 			inAir = true;
 		}
-		if (Input.GetKeyDown ("s") && !changedGravity) {
+		if (Input.GetKeyDown ("s") && !changedGravity && dir < 0) {
 			rigidbody.AddForce(0, -500.0f, 0);
 			changedGravity = true;
 			inAir = true;
