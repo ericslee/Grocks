@@ -3,26 +3,27 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-	public GameObject restartMenuPrefab;
-	private GameObject restartMenu;
+	public GameObject replayMenuPrefab;
+	private GameObject replayMenu;
 
 	// Use this for initialization
 	void Start () {
-
+		replayMenu = (GameObject)(GameObject.Instantiate(replayMenuPrefab));
+		HideReplayMenu();
 	}
 
 	// TODO: here is where you would reset the game state after someone replays or on init
 	public void Reset() {
 		Debug.Log ("Game reset");
-		DestroyRestartMenu();
+		HideReplayMenu();
 	}
 	
-	void CreateRestartMenu() {
-		restartMenu = (GameObject)(GameObject.Instantiate(restartMenuPrefab));
+	void ShowReplayMenu() {
+		replayMenu.GetComponent<ReplayMenu>().Show();
 	}
 
-	void DestroyRestartMenu() {
-		Destroy(restartMenu);
+	void HideReplayMenu() {
+		replayMenu.GetComponent<ReplayMenu>().Hide();
 	}
 
 	// Update is called once per frame
