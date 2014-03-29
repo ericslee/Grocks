@@ -5,6 +5,13 @@ public class StartMenu : MonoBehaviour {
 
 	public GUISkin customSkin;
 
+	int screenCenterX = Screen.width/2;
+	int screenCenterY = Screen.height/2;
+	int buttonWidth = 100;
+	int buttonHeight = 50;
+	int titleWidth = 235;
+	int titleHeight = 150;
+
 	// Use this for initialization
 	void Start () {
 
@@ -22,13 +29,6 @@ public class StartMenu : MonoBehaviour {
 		// Make a background box
 
 		//GUI.Box(new Rect(10,10,100,90), "START MENU");
-
-		int screenCenterX = Screen.width/2;
-		int screenCenterY = Screen.height/2;
-		int buttonWidth = 100;
-		int buttonHeight = 50;
-		int titleWidth = 200;
-		int titleHeight = 150;
 
 		GUI.Label(new Rect (screenCenterX-titleWidth/2, screenCenterY-titleHeight/2, titleWidth, titleHeight), 
 		          "GROCKS");
