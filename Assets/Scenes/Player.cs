@@ -19,22 +19,29 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		// prevent any movement except for changing gravity when not in the air
+		if (!inAir) {
+			rigidbody.velocity = Vector3.zero;
+		}
+
 		// add force on button press
 		if (Input.GetKeyDown ("w") && !changedGravity) {
-			rigidbody.AddForce(0, 100.0f, 0);
+			rigidbody.AddForce(0, 500.0f, 0);
 			changedGravity = true;
+			inAir = true;
 		}
 		if (Input.GetKeyDown ("s") && !changedGravity) {
-			rigidbody.AddForce(0, -100.0f, 0);
+			rigidbody.AddForce(0, -500.0f, 0);
 			changedGravity = true;
+			inAir = true;
 		}
 
 		// move left and right
-		if (Input.GetKey ("a")) {
+		if (Input.GetKey ("a") && inAir) {
 			rigidbody.MovePosition(rigidbody.position + leftSpeed * Time.deltaTime);
 		}
 		// move left and right
-		if (Input.GetKey ("d")) {
+		if (Input.GetKey ("d") && inAir) {
 			rigidbody.MovePosition(rigidbody.position + rightSpeed * Time.deltaTime);
 		}
 	}
@@ -43,12 +50,14 @@ public class Player : MonoBehaviour {
 		if (collision.gameObject.tag == "Ceiling") {
 			dir = -1;
 			changedGravity = false;
-			rigidbody.velocity = Vector3.zero;
+			inAir = false;
+			//rigidbody.velocity = Vector3.zero;
 		}
 		else if (collision.gameObject.tag == "Floor") {
 			dir = 1;
 			changedGravity = false;
-			rigidbody.velocity = Vector3.zero;
+			inAir = false;
+			//rigidbody.velocity = Vector3.zero;
 		}
 	}
 }
