@@ -3,13 +3,15 @@ using System.Collections;
 
 public class PlayAgainButton : MonoBehaviour {
 
+	private GameManager gameManager;
+
 	// Use this for initialization
 	void Start () {
-		
+		gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 	}
 
 	void OnMouseDown() {
-		Debug.Log ("CALL RESTARTGAME FROM GAMEMANAGER");
+		gameManager.Reset();
 	}
 
 	// Update is called once per frame

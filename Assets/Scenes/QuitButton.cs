@@ -10,6 +10,7 @@ public class QuitButton : MonoBehaviour {
 
 	void OnMouseDown() {
 		Application.Quit();
+		Debug.Log("Quitting");
 	}
 
 	// Update is called once per frame
