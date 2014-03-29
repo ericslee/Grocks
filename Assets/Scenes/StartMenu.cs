@@ -27,13 +27,13 @@ public class StartMenu : MonoBehaviour {
 		int screenCenterY = Screen.height/2;
 		int buttonWidth = 100;
 		int buttonHeight = 50;
-		int titleWidth = 120;
+		int titleWidth = 200;
 		int titleHeight = 150;
 
 		GUI.Label(new Rect (screenCenterX-titleWidth/2, screenCenterY-titleHeight/2, titleWidth, titleHeight), 
 		          "GROCKS");
 
-		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 250, buttonWidth, buttonHeight), "Start")) {
+		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 265, buttonWidth, buttonHeight), "Start")) {
 			Application.LoadLevel("Arena_1");
 		}
 
