@@ -6,9 +6,13 @@ public class Player : MonoBehaviour {
 	private Vector3 leftSpeed = new Vector3(0, 0, -15.0f);
 	private Vector3 rightSpeed = new Vector3(0, 0, 15.0f);
 
+	public bool inAir;
+	int dir;
+
 	// Use this for initialization
 	void Start () {
-	
+		inAir = false;
+		dir = 1;
 	}
 	
 	// Update is called once per frame
