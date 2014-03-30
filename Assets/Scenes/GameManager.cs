@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour {
 		Reset();
 	}
 
-	// TODO: here is where you would reset the game state after someone replays or on init
 	public void Reset() {
 		Debug.Log ("Game reset");
 		controlsFrozen = true;
