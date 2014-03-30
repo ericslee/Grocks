@@ -11,10 +11,11 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		replayMenu = (GameObject)(GameObject.Instantiate(replayMenuPrefab));
-		player1 = GameObject.Find("PLAYER1");
-		player2 = GameObject.Find("PLAYER2");
+		player1 = GameObject.FindWithTag("Player1");
+		player2 = GameObject.FindWithTag("Player2");
 		HideReplayMenu();
-		Reset();
+
+		Invoke("Reset", 2);
 	}
 
 	// TODO: here is where you would reset the game state after someone replays or on init
