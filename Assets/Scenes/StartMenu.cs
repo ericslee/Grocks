@@ -12,6 +12,8 @@ public class StartMenu : MonoBehaviour {
 	int titleWidth = 235;
 	int titleHeight = 150;
 
+	public AudioClip BOOMClip;
+
 	// Use this for initialization
 	void Start () {
 
