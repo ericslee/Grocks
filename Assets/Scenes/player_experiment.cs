@@ -36,7 +36,7 @@ public class player_experiment : MonoBehaviour {
 	private bool isStrugglin;
 	private float strugglinTimer;
 	public GameObject IMSWEATIN;
-	public GameObject theSweat;
+	public ParticleSystem theSweat;
 
 	GameManager gameManager;
 
@@ -154,10 +154,10 @@ public class player_experiment : MonoBehaviour {
 
 			// TIME TO SWEAT
 			if(IMSWEATIN && !theSweat) {
-				theSweat = (GameObject)Instantiate(IMSWEATIN, transform.position,
+				theSweat = (ParticleSystem)Instantiate(IMSWEATIN, transform.position,
 				                                  Quaternion.identity);
 				if(theSweat) {
-					Destroy(theSweat, 0.25f);
+					Destroy(theSweat.gameObject, 0.25f);
 				}
 			}
 		}
