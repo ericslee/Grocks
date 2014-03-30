@@ -15,11 +15,15 @@ public class GameManager : MonoBehaviour {
 	private GameObject player1;
 	private GameObject player2;
 
+	public bool controlsFrozen;
+
 	// Use this for initialization
 	void Start () {
 		replayMenu = (GameObject)(GameObject.Instantiate(replayMenuPrefab));
 		player1 = GameObject.FindWithTag("Player1");
 		player2 = GameObject.FindWithTag("Player2");
+
+		controlsFrozen = true;
 		HideReplayMenu();
 
 		Reset();
@@ -28,6 +32,8 @@ public class GameManager : MonoBehaviour {
 	// TODO: here is where you would reset the game state after someone replays or on init
 	public void Reset() {
 		Debug.Log ("Game reset");
+		controlsFrozen = true;
+
 		ceiling = (GameObject)(GameObject.Instantiate(ceilingSetPrefab));
 		floor = (GameObject)(GameObject.Instantiate(floorSetPrefab));
 
@@ -45,6 +51,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void ResetAnimation() {
+		Invoke("UnfreezeControls", 1.5f);
 		player_experiment p1Comp = player1.GetComponent<player_experiment>();
 		player1.rigidbody.AddForce(0, 300.0f, 0);
 		p1Comp.inAir = true;
@@ -53,7 +60,11 @@ public class GameManager : MonoBehaviour {
 		player2.rigidbody.AddForce(0, -300.0f, 0);
 		p2Comp.inAir = true;
 	}
-	
+
+	void UnfreezeControls() {
+		controlsFrozen = false;
+	}
+
 	void ShowReplayMenu() {
 		replayMenu.GetComponent<ReplayMenu>().Show();
 	}

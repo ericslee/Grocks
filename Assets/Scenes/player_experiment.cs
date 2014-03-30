@@ -26,6 +26,8 @@ public class player_experiment : MonoBehaviour {
 	public Material GaryStruggle;
 	public Material GaryStunned;
 
+	GameManager gameManager;
+
 	// Use this for initialization
 	void Start () {
 		if (tag == "Player1") dir = -1;
@@ -50,6 +52,8 @@ public class player_experiment : MonoBehaviour {
 			opponents = new string[1];
 			opponents[0] = "Player1";
 		}
+
+		gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
@@ -64,30 +68,32 @@ public class player_experiment : MonoBehaviour {
 		}
 		if (inAir) rigidbody.AddForce(0, dir * 300.0f, 0);
 
-		// move left and right
-		if (Input.GetKey (keyLeft) && inAir && bounceTimer < 1) {
-			rigidbody.MovePosition(rigidbody.position + leftSpeed * Time.deltaTime);
-			
-			// remove horizontal velocity if player moves in air after collision
-			rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
-		}
+		if (!gameManager.controlsFrozen) {
+			// move left and right
+			if (Input.GetKey (keyLeft) && inAir && bounceTimer < 1) {
+				rigidbody.MovePosition(rigidbody.position + leftSpeed * Time.deltaTime);
+				
+				// remove horizontal velocity if player moves in air after collision
+				rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
+			}
 
-		if (Input.GetKey (keyRight) && inAir && bounceTimer < 1) {
-			rigidbody.MovePosition(rigidbody.position + rightSpeed * Time.deltaTime);
-			
-			// remove horizontal velocity if player moves in air after collision
-			rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
-		}
+			if (Input.GetKey (keyRight) && inAir && bounceTimer < 1) {
+				rigidbody.MovePosition(rigidbody.position + rightSpeed * Time.deltaTime);
+				
+				// remove horizontal velocity if player moves in air after collision
+				rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
+			}
 
-		if (Input.GetKeyDown (keyUp) && !inAir && dir < 0) {
-			//rigidbody.AddForce(0, 500.0f, 0);
-			dir = 1;
-			inAir = true;
-		}
-		if (Input.GetKeyDown (keyDown) && !inAir && dir > 0) {
-			//rigidbody.AddForce(0, -500.0f, 0);
-			dir = -1;
-			inAir = true;
+			if (Input.GetKeyDown (keyUp) && !inAir && dir < 0) {
+				//rigidbody.AddForce(0, 500.0f, 0);
+				dir = 1;
+				inAir = true;
+			}
+			if (Input.GetKeyDown (keyDown) && !inAir && dir > 0) {
+				//rigidbody.AddForce(0, -500.0f, 0);
+				dir = -1;
+				inAir = true;
+			}
 		}
 
 		// change face material based on situation
