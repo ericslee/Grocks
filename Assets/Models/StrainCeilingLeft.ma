@@ -1,6 +1,6 @@
 //Maya ASCII 2012 scene
 //Name: StrainCeilingLeft.ma
-//Last modified: Sat, Mar 29, 2014 09:56:02 PM
+//Last modified: Sat, Mar 29, 2014 11:00:08 PM
 //Codeset: UTF-8
 requires maya "2012";
 requires "stereoCamera" "10.0";
@@ -13,8 +13,8 @@ fileInfo "osv" "Mac OS X 10.9.2";
 fileInfo "license" "student";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -18.219626139783394 0.90789482820242207 -0.98388795382284 ;
-	setAttr ".r" -type "double3" -2.1383527296086253 -92.999999999993605 0 ;
+	setAttr ".t" -type "double3" -17.45817307346374 5.4051498877440896 1.243567705272862 ;
+	setAttr ".r" -type "double3" -16.538352729607364 -85.799999999992295 4.3427539264995328e-14 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999986;
@@ -64,9 +64,9 @@ createNode camera -s -n "sideShape" -p "side";
 	setAttr ".man" -type "string" "side_mask";
 	setAttr ".hc" -type "string" "viewSet -s %camera";
 	setAttr ".o" yes;
-createNode transform -n "pCube1";
+createNode transform -n "StrainCeilingLeft";
 	setAttr ".s" -type "double3" 3 3 3 ;
-createNode mesh -n "pCubeShape1" -p "pCube1";
+createNode mesh -n "StrainCeilingLeftShape" -p "StrainCeilingLeft";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -174,15 +174,13 @@ select -ne :hardwareRenderGlobals;
 select -ne :defaultHardwareRenderGlobals;
 	setAttr ".fn" -type "string" "im";
 	setAttr ".res" -type "string" "ntsc_4d 646 485 1.333";
-select -ne :ikSystem;
-	setAttr -s 4 ".sol";
-connectAttr "polyCube1.out" "pCubeShape1.i";
+connectAttr "polyCube1.out" "StrainCeilingLeftShape.i";
 relationship "link" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
 relationship "link" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
 relationship "shadowLink" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
 relationship "shadowLink" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
 connectAttr "layerManager.dli[0]" "defaultLayer.id";
 connectAttr "renderLayerManager.rlmi[0]" "defaultRenderLayer.rlid";
-connectAttr "pCubeShape1.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "StrainCeilingLeftShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "defaultRenderLayer.msg" ":defaultRenderingList1.r" -na;
 // End of StrainCeilingLeft.ma

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 	private GameObject player1;
 	private GameObject player2;
 
+	private bool roundHasWinner;
 	public bool controlsFrozen;
 
 	// Use this for initialization
@@ -29,15 +30,16 @@ public class GameManager : MonoBehaviour {
 		player1 = (GameObject)(GameObject.Instantiate(player1Prefab));
 		player2 = (GameObject)(GameObject.Instantiate(player2Prefab));
 
+		roundHasWinner = false;
 		controlsFrozen = true;
 		HideReplayMenu();
 
 		Reset();
 	}
 
-	// TODO: here is where you would reset the game state after someone replays or on init
 	public void Reset() {
 		Debug.Log ("Game reset");
+		roundHasWinner = false;
 		controlsFrozen = true;
 
 		Destroy(ceiling);
@@ -94,7 +96,9 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void setCurrentWinner(string thisGuyWins) {
-		replayMenu.GetComponent<ReplayMenu> ().SetCurrentWinner (thisGuyWins);
-		//ShowReplayMenu ();
+		if (!roundHasWinner) {
+			roundHasWinner = true;
+			replayMenu.GetComponent<ReplayMenu> ().SetCurrentWinner (thisGuyWins);
+		}
 	}
 }

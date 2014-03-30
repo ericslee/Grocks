@@ -26,6 +26,18 @@ public class player_experiment : MonoBehaviour {
 	public Material GaryStruggle;
 	public Material GaryStunned;
 
+	// Struggle meshes
+	public Mesh defaultCube;
+	public Mesh StruggleFloorLeft;
+	public Mesh StruggleFloorRight;
+	public Mesh StruggleCeilingLeft;
+	public Mesh StruggleCeilingRight;
+
+	private bool isStrugglin;
+	private float strugglinTimer;
+	public GameObject IMSWEATIN;
+	public ParticleSystem theSweat;
+
 	GameManager gameManager;
 	public GameObject sittingOn;
 
@@ -60,6 +72,12 @@ public class player_experiment : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		isStrugglin = false;
+
+		strugglinTimer--;
+		if(strugglinTimer < 0)
+			strugglinTimer = 0.0f;
+
 		bounceTimer--;
 		if (bounceTimer < 0)
 			bounceTimer = 0.0f;
@@ -69,6 +87,11 @@ public class player_experiment : MonoBehaviour {
 		}
 		if (inAir) rigidbody.AddForce(0, dir * 300.0f, 0);
 
+		// if not struggling, use the default cube mesh
+		if(!isStrugglin) {
+			GetComponent<MeshFilter>().mesh = defaultCube;
+		}
+
 		if (!gameManager.controlsFrozen) {
 			if (sittingOn == null) {
 				Debug.Log("calling from " + tag);
@@ -76,18 +99,44 @@ public class player_experiment : MonoBehaviour {
 			}
 			
 			// move left and right
-			if (Input.GetKey (keyLeft) && inAir && bounceTimer < 1) {
-				rigidbody.MovePosition(rigidbody.position + leftSpeed * Time.deltaTime);
+			if (Input.GetKey (keyLeft)) {
+				if(inAir && bounceTimer < 1) {
+					rigidbody.MovePosition(rigidbody.position + leftSpeed * Time.deltaTime);
+					
+					// remove horizontal velocity if player moves in air after collision
+					rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
+				}
 				
-				// remove horizontal velocity if player moves in air after collision
-				rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
+				// struggle otherwise
+				if(!inAir && strugglinTimer < 1.0f) {
+					if(dir == -1) {
+						GetComponent<MeshFilter>().mesh = StruggleFloorLeft;
+					}
+					else {
+						GetComponent<MeshFilter>().mesh = StruggleCeilingLeft;
+					}
+					isStrugglin = true;
+				}
 			}
-
-			if (Input.GetKey (keyRight) && inAir && bounceTimer < 1) {
-				rigidbody.MovePosition(rigidbody.position + rightSpeed * Time.deltaTime);
+			
+			if (Input.GetKey (keyRight)) {
+				if(inAir && bounceTimer < 1) {
+					rigidbody.MovePosition(rigidbody.position + rightSpeed * Time.deltaTime);
+					
+					// remove horizontal velocity if player moves in air after collision
+					rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
+				}
 				
-				// remove horizontal velocity if player moves in air after collision
-				rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
+				// struggle otherwise
+				if(!inAir && strugglinTimer < 1.0f) {
+					if(dir == -1) {
+						GetComponent<MeshFilter>().mesh = StruggleFloorRight;
+					}
+					else {
+						GetComponent<MeshFilter>().mesh = StruggleCeilingRight;
+					}
+					isStrugglin = true;
+				}
 			}
 
 			if (Input.GetKeyDown (keyUp) && !inAir && dir < 0) {
@@ -102,14 +151,30 @@ public class player_experiment : MonoBehaviour {
 			}
 		}
 
+
 		// change face material based on situation
-		if(inAir) {
-			if(tag == "Player1") renderer.material = EricAngry;
-			if(tag == "Player2") renderer.material = GaryAngry;
+		if(isStrugglin) {
+			if(tag == "Player1") renderer.material = EricStruggle;
+			if(tag == "Player2") renderer.material = GaryStruggle;
+
+			// TIME TO SWEAT
+			if(IMSWEATIN && !theSweat) {
+				theSweat = (ParticleSystem)Instantiate(IMSWEATIN, transform.position,
+				                                  Quaternion.identity);
+				if(theSweat) {
+					Destroy(theSweat.gameObject, 0.25f);
+				}
+			}
 		}
 		else {
-			if(tag == "Player1") renderer.material = EricHappy;
-			if(tag == "Player2") renderer.material = GaryHappy;
+			if(inAir) {
+				if(tag == "Player1") renderer.material = EricAngry;
+				if(tag == "Player2") renderer.material = GaryAngry;
+			}
+			else {
+				if(tag == "Player1") renderer.material = EricHappy;
+				if(tag == "Player2") renderer.material = GaryHappy;
+			}
 		}
 	}
 
@@ -160,6 +225,8 @@ public class player_experiment : MonoBehaviour {
 
 			}
 		}
+
+		strugglinTimer = 25.0f;
 	}
 
 	void playersStacked(GameObject opponent) {
