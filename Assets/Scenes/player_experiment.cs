@@ -43,6 +43,8 @@ public class player_experiment : MonoBehaviour {
 	// DEATH CRIES
 	public AudioClip deathHi;
 	public AudioClip deathLow;
+	public AudioClip struggleHi;
+	public AudioClip struggleLow;
 
 	// Use this for initialization
 	void Start () {
@@ -153,8 +155,18 @@ public class player_experiment : MonoBehaviour {
 
 		// change face material based on situation
 		if(isStrugglin) {
-			if(tag == "Player1") renderer.material = EricStruggle;
-			if(tag == "Player2") renderer.material = GaryStruggle;
+			if(tag == "Player1") {
+				renderer.material = EricStruggle;
+				if (!GameObject.Find("One shot audio")){ 
+					AudioSource.PlayClipAtPoint (struggleLow, transform.position);
+				}
+			}
+			if(tag == "Player2") {
+				renderer.material = GaryStruggle;
+				if (!GameObject.Find("One shot audio")){ 
+					AudioSource.PlayClipAtPoint(struggleHi,transform.position);
+				}
+			}
 
 			// TIME TO SWEAT
 			if(IMSWEATIN && !theSweat) {
