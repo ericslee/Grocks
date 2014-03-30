@@ -30,7 +30,6 @@ public class box_collision_experiment : MonoBehaviour {
 		// presumably we'll put differing render code here?
 		// right now the block will just get darker the more times it's struck
 		//gameObject.renderer.material.color = new Color(HP/HPmax,HP/HPmax,HP/HPmax);
-
 	}
 	
 	void OnCollisionEnter(Collision hit) {
@@ -61,6 +60,28 @@ public class box_collision_experiment : MonoBehaviour {
 			sitter.GetComponent<player_experiment>().inAir = false;
 		}
 
+		// Change texture
+		float percentHealthRemaining = (HP + 1) / (HPmax + 1);
+		if(percentHealthRemaining > 0.5f && percentHealthRemaining <= 0.75f) {
+			if(gameObject.tag == "Floor") renderer.material = terrain2;
+			else renderer.material = terrain2_ceiling;
+		}
+		else if(percentHealthRemaining > 0.25f && percentHealthRemaining <= 0.5f) {
+			if(gameObject.tag == "Floor") renderer.material = terrain3;
+			else renderer.material = terrain3_ceiling;
+		}
+		else if(percentHealthRemaining > 0.0f && percentHealthRemaining <= 0.25f) {
+			if(gameObject.tag == "Floor") renderer.material = terrain4;
+			else renderer.material = terrain4_ceiling;
+		}
+	}
+
+	public void manualDamage() {
+		if (HP == 0) {
+			Destroy (gameObject);
+			return;
+		}
+		HP--;
 		// Change texture
 		float percentHealthRemaining = (HP + 1) / (HPmax + 1);
 		if(percentHealthRemaining > 0.5f && percentHealthRemaining <= 0.75f) {
