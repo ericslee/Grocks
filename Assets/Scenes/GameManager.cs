@@ -56,12 +56,12 @@ public class GameManager : MonoBehaviour {
 
 		player1.transform.position = new Vector3(-41.0f, 4.0f, -16.0f);
 		player2.transform.position = new Vector3(-41.0f, 4.0f, 16.0f);
-
-		player_experiment p1Comp = player1.GetComponent<player_experiment>();
-		p1Comp.Reset();
-		player_experiment p2Comp = player2.GetComponent<player_experiment>();
-		p2Comp.Reset();
-
+//
+//		player_experiment p1Comp = player1.GetComponent<player_experiment>();
+//		p1Comp.Reset();
+//		player_experiment p2Comp = player2.GetComponent<player_experiment>();
+//		p2Comp.Reset();
+//
 		Invoke("ResetAnimation", 2);
 
 		HideReplayMenu();
