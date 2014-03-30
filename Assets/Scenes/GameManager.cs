@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour {
 	public int totalRounds = 3;
 	public int currentRound;
 
+	private int player1Score;
+	private int player2Score;
+
 	// Use this for initialization
 	void Start () {
 		replayMenu = (GameObject)(GameObject.Instantiate(replayMenuPrefab));
@@ -34,6 +37,9 @@ public class GameManager : MonoBehaviour {
 		controlsFrozen = true;
 		currentRound = 0;
 		HideReplayMenu();
+
+		player1Score = 0;
+		player2Score = 0;
 
 		Reset();
 	}
@@ -146,8 +152,13 @@ public class GameManager : MonoBehaviour {
 	public void setCurrentWinner(string thisGuyWins) {
 		if (!roundHasWinner) {
 			roundHasWinner = true;
-			if (currentRound == totalRounds) {
+			if (thisGuyWins == "Player 1") player1Score++;
+			else if (thisGuyWins == "Player 2") player2Score++;
+
+			if (currentRound == totalRounds || player1Score == 2 || player2Score == 2) {
 				replayMenu.GetComponent<ReplayMenu> ().SetCurrentWinner (thisGuyWins);
+				player1Score = 0;
+				player2Score = 0;
 			} else {
 				Invoke("Reset", 3);
 			}
