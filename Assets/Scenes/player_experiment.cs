@@ -48,6 +48,7 @@ public class player_experiment : MonoBehaviour {
 
 	public bool won;
 	public AudioClip brickImpactClip;
+	public AudioClip playerImpactClip;
 
 	// Use this for initialization
 	void Start () {
@@ -227,6 +228,10 @@ public class player_experiment : MonoBehaviour {
 
 		// handle player/player collisions
 		if (isOpponent(hit.collider.tag) && inAir) {
+
+			// Play audio and change face
+			AudioSource.PlayClipAtPoint(playerImpactClip,transform.position);
+
 			inAir = false;
 
 			float otherY = hit.transform.position.y;
