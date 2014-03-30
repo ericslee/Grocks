@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
 	public GameObject floorSetPrefab;
 	public GameObject player1Prefab;
 	public GameObject player2Prefab;
+	public GameObject readyPrefab;
+	public GameObject goPrefab;
 
 	private GameObject replayMenu;
 	private GameObject ceiling;
@@ -16,6 +18,9 @@ public class GameManager : MonoBehaviour {
 
 	private GameObject player1;
 	private GameObject player2;
+
+	private GameObject readyPlane;
+	private GameObject goPlane;
 
 	private bool roundHasWinner;
 	public bool controlsFrozen;
@@ -54,7 +59,12 @@ public class GameManager : MonoBehaviour {
 		player1.transform.position = new Vector3(-41.0f, 4.0f, -16.0f);
 		player2.transform.position = new Vector3(-41.0f, 4.0f, 16.0f);
 
-		Invoke("ResetAnimation", 2);
+		Invoke("ResetAnimation", 3);
+
+		Invoke("ShowReady", 0.1f);
+		Invoke("DestroyReady", 2.6f);
+		Invoke("ShowGo", 2.7f);
+		Invoke("DestroyGo", 3.1f);
 
 		HideReplayMenu();
 	}
@@ -68,6 +78,22 @@ public class GameManager : MonoBehaviour {
 		player_experiment p2Comp = player2.GetComponent<player_experiment>();
 		player2.rigidbody.AddForce(0, -300.0f, 0);
 		p2Comp.inAir = true;
+	}
+
+	void ShowReady() {
+		readyPlane = (GameObject)(GameObject.Instantiate(readyPrefab));
+	}
+
+	void DestroyReady() {
+		Destroy(readyPlane);
+	}
+
+	void ShowGo() {
+		goPlane = (GameObject)(GameObject.Instantiate(goPrefab));
+	}
+
+	void DestroyGo() {
+		Destroy(goPlane);
 	}
 
 	void UnfreezeControls() {
@@ -123,7 +149,7 @@ public class GameManager : MonoBehaviour {
 			if (currentRound == totalRounds) {
 				replayMenu.GetComponent<ReplayMenu> ().SetCurrentWinner (thisGuyWins);
 			} else {
-				Reset();
+				Invoke("Reset", 3);
 			}
 		}
 	}

@@ -36,7 +36,7 @@ public class player_experiment : MonoBehaviour {
 	private bool isStrugglin;
 	private float strugglinTimer;
 	public GameObject IMSWEATIN;
-	public GameObject theSweat;
+	public ParticleSystem theSweat;
 
 	GameManager gameManager;
 	
@@ -47,7 +47,8 @@ public class player_experiment : MonoBehaviour {
 	public AudioClip struggleLow;
 
 	public bool won;
-	
+	public AudioClip brickImpactClip;
+
 	// Use this for initialization
 	void Start () {
 		if (tag == "Player1") dir = -1;
@@ -177,10 +178,10 @@ public class player_experiment : MonoBehaviour {
 
 			// TIME TO SWEAT
 			if(IMSWEATIN && !theSweat) {
-				theSweat = (GameObject)Instantiate(IMSWEATIN, transform.position,
+				theSweat = (ParticleSystem)Instantiate(IMSWEATIN, transform.position,
 				                                  Quaternion.identity);
 				if(theSweat) {
-					Destroy(theSweat, 0.25f);
+					Destroy(theSweat.gameObject, 0.25f);
 				}
 			}
 		}
@@ -220,6 +221,8 @@ public class player_experiment : MonoBehaviour {
 				inAir = false;
 				hit.gameObject.GetComponent<box_collision_experiment>().sittingOnMe = gameObject;
 			}
+
+			AudioSource.PlayClipAtPoint(brickImpactClip,transform.position);
 		}
 
 		// handle player/player collisions
@@ -283,11 +286,12 @@ public class player_experiment : MonoBehaviour {
 
 	void hop() {
 		if (!won) return;
+		this.rigidbody.detectCollisions = false;
 		if (bounceTimer < 0) bounceTimer = 20;
 		if(tag == "Player1") renderer.material = EricHappy;
 		if(tag == "Player2") renderer.material = GaryHappy;
 		inAir = false;
-		Vector3 shift = new Vector3(0.0f, 5.0f, 0.0f);
+		Vector3 shift = new Vector3(0.0f, 0.1f, 0.0f);
 		if (bounceTimer < 10) rigidbody.MovePosition(rigidbody.position + shift);
 		else rigidbody.MovePosition(rigidbody.position - shift);
 		bounceTimer--;
