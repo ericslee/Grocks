@@ -39,7 +39,7 @@ public class TerrainBlock : MonoBehaviour {
 		//if (this.tag == "Floor") sitter.GetComponent<Player>().setDir(1);
 		//if (HP > 0) sitter.GetComponent<Player>().setInAir(false);
 
-
+		// Particle effects
 		if(rock_HitPrefab) {
 			foreach (ContactPoint contact in hit.contacts) {
 				//Debug.DrawRay(contact.point, contact.normal, Color.white);
