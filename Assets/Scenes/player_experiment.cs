@@ -38,6 +38,8 @@ public class player_experiment : MonoBehaviour {
 	public GameObject IMSWEATIN;
 	public ParticleSystem theSweat;
 
+	GameManager gameManager;
+
 	// Use this for initialization
 	void Start () {
 		if (tag == "Player1") dir = -1;
@@ -62,6 +64,8 @@ public class player_experiment : MonoBehaviour {
 			opponents = new string[1];
 			opponents[0] = "Player1";
 		}
+
+		gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
@@ -82,61 +86,63 @@ public class player_experiment : MonoBehaviour {
 		}
 		if (inAir) rigidbody.AddForce(0, dir * 300.0f, 0);
 
-		// move left and right
-		if (Input.GetKey (keyLeft)) {
-			if(inAir && bounceTimer < 1) {
-				rigidbody.MovePosition(rigidbody.position + leftSpeed * Time.deltaTime);
-			
-				// remove horizontal velocity if player moves in air after collision
-				rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
-			}
-
-			// struggle otherwise
-			if(!inAir && strugglinTimer < 1.0f) {
-				if(dir == -1) {
-					GetComponent<MeshFilter>().mesh = StruggleFloorLeft;
-				}
-				else {
-					GetComponent<MeshFilter>().mesh = StruggleCeilingLeft;
-				}
-				isStrugglin = true;
-			}
-		}
-
-		if (Input.GetKey (keyRight)) {
-			if(inAir && bounceTimer < 1) {
-				rigidbody.MovePosition(rigidbody.position + rightSpeed * Time.deltaTime);
-			
-				// remove horizontal velocity if player moves in air after collision
-				rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
-			}
-
-			// struggle otherwise
-			if(!inAir && strugglinTimer < 1.0f) {
-				if(dir == -1) {
-					GetComponent<MeshFilter>().mesh = StruggleFloorRight;
-				}
-				else {
-					GetComponent<MeshFilter>().mesh = StruggleCeilingRight;
-				}
-				isStrugglin = true;
-			}
-		}
-
 		// if not struggling, use the default cube mesh
 		if(!isStrugglin) {
 			GetComponent<MeshFilter>().mesh = defaultCube;
 		}
 
-		if (Input.GetKeyDown (keyUp) && !inAir && dir < 0) {
-			//rigidbody.AddForce(0, 500.0f, 0);
-			dir = 1;
-			inAir = true;
-		}
-		if (Input.GetKeyDown (keyDown) && !inAir && dir > 0) {
-			//rigidbody.AddForce(0, -500.0f, 0);
-			dir = -1;
-			inAir = true;
+		if (!gameManager.controlsFrozen) {
+			// move left and right
+			if (Input.GetKey (keyLeft)) {
+				if(inAir && bounceTimer < 1) {
+					rigidbody.MovePosition(rigidbody.position + leftSpeed * Time.deltaTime);
+					
+					// remove horizontal velocity if player moves in air after collision
+					rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
+				}
+				
+				// struggle otherwise
+				if(!inAir && strugglinTimer < 1.0f) {
+					if(dir == -1) {
+						GetComponent<MeshFilter>().mesh = StruggleFloorLeft;
+					}
+					else {
+						GetComponent<MeshFilter>().mesh = StruggleCeilingLeft;
+					}
+					isStrugglin = true;
+				}
+			}
+			
+			if (Input.GetKey (keyRight)) {
+				if(inAir && bounceTimer < 1) {
+					rigidbody.MovePosition(rigidbody.position + rightSpeed * Time.deltaTime);
+					
+					// remove horizontal velocity if player moves in air after collision
+					rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
+				}
+				
+				// struggle otherwise
+				if(!inAir && strugglinTimer < 1.0f) {
+					if(dir == -1) {
+						GetComponent<MeshFilter>().mesh = StruggleFloorRight;
+					}
+					else {
+						GetComponent<MeshFilter>().mesh = StruggleCeilingRight;
+					}
+					isStrugglin = true;
+				}
+			}
+
+			if (Input.GetKeyDown (keyUp) && !inAir && dir < 0) {
+				//rigidbody.AddForce(0, 500.0f, 0);
+				dir = 1;
+				inAir = true;
+			}
+			if (Input.GetKeyDown (keyDown) && !inAir && dir > 0) {
+				//rigidbody.AddForce(0, -500.0f, 0);
+				dir = -1;
+				inAir = true;
+			}
 		}
 
 
