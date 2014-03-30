@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour {
 	public GameObject replayMenuPrefab;
 	public GameObject ceilingSetPrefab;
 	public GameObject floorSetPrefab;
+	public GameObject player1Prefab;
+	public GameObject player2Prefab;
 
 	private GameObject replayMenu;
 	private GameObject ceiling;
@@ -20,8 +22,9 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		replayMenu = (GameObject)(GameObject.Instantiate(replayMenuPrefab));
-		player1 = GameObject.FindWithTag("Player1");
-		player2 = GameObject.FindWithTag("Player2");
+
+		player1 = (GameObject)(GameObject.Instantiate(player1Prefab));
+		player2 = (GameObject)(GameObject.Instantiate(player2Prefab));
 
 		controlsFrozen = true;
 		HideReplayMenu();
@@ -36,6 +39,12 @@ public class GameManager : MonoBehaviour {
 
 		ceiling = (GameObject)(GameObject.Instantiate(ceilingSetPrefab));
 		floor = (GameObject)(GameObject.Instantiate(floorSetPrefab));
+
+		Destroy(player1);
+		Destroy(player2);
+
+		player1 = (GameObject)(GameObject.Instantiate(player1Prefab));
+		player2 = (GameObject)(GameObject.Instantiate(player2Prefab));
 
 		player1.transform.position = new Vector3(-41.0f, 4.0f, -16.0f);
 		player2.transform.position = new Vector3(-41.0f, 4.0f, 16.0f);
