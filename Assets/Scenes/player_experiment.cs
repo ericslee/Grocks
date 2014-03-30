@@ -287,12 +287,12 @@ public class player_experiment : MonoBehaviour {
 	void hop() {
 		if (!won) return;
 		this.rigidbody.detectCollisions = false;
-		if (bounceTimer < 0) bounceTimer = 20;
+		if (bounceTimer < 1) bounceTimer = 20;
 		if(tag == "Player1") renderer.material = EricHappy;
 		if(tag == "Player2") renderer.material = GaryHappy;
 		inAir = false;
 		Vector3 shift = new Vector3(0.0f, 0.1f, 0.0f);
-		if (bounceTimer < 10) rigidbody.MovePosition(rigidbody.position + shift);
+		if (bounceTimer <= 10) rigidbody.MovePosition(rigidbody.position + shift);
 		else rigidbody.MovePosition(rigidbody.position - shift);
 		bounceTimer--;
 	}
