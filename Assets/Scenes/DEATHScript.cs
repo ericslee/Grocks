@@ -26,8 +26,7 @@ public class DEATHScript : MonoBehaviour {
 			// Report winner and display replay GUI
 			manager.setCurrentWinner("Player 2");
 
-			// Destroy player 1
-
+			other.GetComponent<player_experiment>().playDeathSound();
 			// Make winner hop?
 
 		}
@@ -36,6 +35,8 @@ public class DEATHScript : MonoBehaviour {
 
 			// Report winner and display replay GUI
 			manager.setCurrentWinner("Player 1");
+
+			other.GetComponent<player_experiment>().playDeathSound();
 		}
 	}
 }
