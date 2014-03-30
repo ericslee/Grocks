@@ -36,7 +36,7 @@ public class player_experiment : MonoBehaviour {
 	private bool isStrugglin;
 	private float strugglinTimer;
 	public GameObject IMSWEATIN;
-	public GameObject theSweat;
+	public ParticleSystem theSweat;
 
 	GameManager gameManager;
 	
@@ -45,6 +45,8 @@ public class player_experiment : MonoBehaviour {
 	public AudioClip deathLow;
 	public AudioClip struggleHi;
 	public AudioClip struggleLow;
+
+	public AudioClip brickImpactClip;
 	
 	// Use this for initialization
 	void Start () {
@@ -170,10 +172,10 @@ public class player_experiment : MonoBehaviour {
 
 			// TIME TO SWEAT
 			if(IMSWEATIN && !theSweat) {
-				theSweat = (GameObject)Instantiate(IMSWEATIN, transform.position,
+				theSweat = (ParticleSystem)Instantiate(IMSWEATIN, transform.position,
 				                                  Quaternion.identity);
 				if(theSweat) {
-					Destroy(theSweat, 0.25f);
+					Destroy(theSweat.gameObject, 0.25f);
 				}
 			}
 		}
@@ -213,6 +215,8 @@ public class player_experiment : MonoBehaviour {
 				inAir = false;
 				hit.gameObject.GetComponent<box_collision_experiment>().sittingOnMe = gameObject;
 			}
+
+			AudioSource.PlayClipAtPoint(brickImpactClip,transform.position);
 		}
 
 		// handle player/player collisions
