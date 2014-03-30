@@ -13,24 +13,31 @@ public class player_experiment : MonoBehaviour {
 	private KeyCode keyRight;
 	private KeyCode keyLeft;
 
+	private string[] opponents;
+
 	// Use this for initialization
 	void Start () {
-		dir = -1;
+		if (tag == "Player1") dir = -1;
+		if (tag == "Player2") dir = 1;
 		inAir = false;
 		bounceTimer = 0;
 
-		// Assign player keys
+		// Assign player keys, set opponents
 		if(tag == "Player1") {
 			keyUp = KeyCode.W;
 			keyDown = KeyCode.S;
 			keyRight = KeyCode.D;
 			keyLeft = KeyCode.A;
+			opponents = new string[1];
+			opponents[0] = "Player2";
 		}
 		else if(tag == "Player2") {
 			keyUp = KeyCode.UpArrow;
 			keyDown = KeyCode.DownArrow;
 			keyRight = KeyCode.RightArrow;
 			keyLeft = KeyCode.LeftArrow;
+			opponents = new string[1];
+			opponents[0] = "Player1";
 		}
 	}
 	
@@ -73,6 +80,13 @@ public class player_experiment : MonoBehaviour {
 		}
 	}
 
+	bool isOpponent(string tag) {
+		for (int i = 0; i < opponents.Length; i++) {
+			if (tag == opponents[i]) return true;
+		}
+		return false;
+	}
+
 	void OnCollisionEnter (Collision hit) {
 
 		float otherY = hit.transform.position.y;
@@ -84,10 +98,21 @@ public class player_experiment : MonoBehaviour {
 		bool collidingOnSide = false;
 		
 		if (Mathf.Abs(thisY - otherY) + 0.1 < thisH + otherH) {
-			Debug.Log(thisH + otherH + " height difference"); // TODO
-			Debug.Log(Mathf.Abs(thisY - otherY) + 0.1 + " centerpoint difference"); // TODO
+			//Debug.Log(thisH + otherH + " height difference"); // TODO
+			//Debug.Log(Mathf.Abs(thisY - otherY) + 0.1 + " centerpoint difference"); // TODO
 			collidingOnSide = true;
 		}
+
+		// handle player/player collisions
+		if (isOpponent(hit.collider.tag)) {
+			if (hit.collider.GetComponent<player_experiment>().collider == false){
+				inAir = false;
+			}
+		}
+	}
+
+	void playersStacked(Collider opponent) {
+		inAir = false;
 	}
 
 	void OnTriggerEnter (Collider other) {
@@ -103,6 +128,6 @@ public class player_experiment : MonoBehaviour {
 	}
 
 	void OnCollisionExit (Collision collision) {
-		inAir = true;
+		if (!isOpponent(collision.collider.tag))inAir = true;
 	}
 }
