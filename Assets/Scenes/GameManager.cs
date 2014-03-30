@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		replayMenu = (GameObject)(GameObject.Instantiate(replayMenuPrefab));
 
+		ceiling = (GameObject)(GameObject.Instantiate(ceilingSetPrefab));
+		floor = (GameObject)(GameObject.Instantiate(floorSetPrefab));
+
 		player1 = (GameObject)(GameObject.Instantiate(player1Prefab));
 		player2 = (GameObject)(GameObject.Instantiate(player2Prefab));
 
@@ -36,6 +39,9 @@ public class GameManager : MonoBehaviour {
 	public void Reset() {
 		Debug.Log ("Game reset");
 		controlsFrozen = true;
+
+		Destroy(ceiling);
+		Destroy(floor);
 
 		ceiling = (GameObject)(GameObject.Instantiate(ceilingSetPrefab));
 		floor = (GameObject)(GameObject.Instantiate(floorSetPrefab));
