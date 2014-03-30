@@ -43,7 +43,7 @@ public class StartMenu : MonoBehaviour {
 		}
 		
 		if(GUI.Button(new Rect(startX + buttonWidth + 5, startY, buttonWidth, buttonHeight), "About")) {
-			//Application.LoadLevel("About_2");
+			Application.LoadLevel("About_2");
 		}
 		
 		if(GUI.Button(new Rect(startX + (buttonWidth * 2) + 11, startY, buttonWidth, buttonHeight), "Quit")) {
