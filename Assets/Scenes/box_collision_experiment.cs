@@ -21,6 +21,8 @@ public class box_collision_experiment : MonoBehaviour {
 
 	public GameObject sittingOnMe;
 
+	public AudioClip brickCrumbleClip;
+
 	// Use this for initialization
 	void Start () {
 		HPmax = HP;
@@ -42,6 +44,7 @@ public class box_collision_experiment : MonoBehaviour {
 		sitter = hit.gameObject;
 		if (HP == 0) {
 			Destroy (gameObject);
+			AudioSource.PlayClipAtPoint(brickCrumbleClip,transform.position);
 			return;
 		}
 
