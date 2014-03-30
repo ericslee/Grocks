@@ -151,4 +151,12 @@ public class player_experiment : MonoBehaviour {
 	void OnCollisionExit (Collision collision) {
 		if (!isOpponent(collision.collider.tag))inAir = true;
 	}
+
+	public void Reset() {
+		if (tag == "Player1") dir = -1;
+		if (tag == "Player2") dir = 1;
+		inAir = false;
+		bounceTimer = 0;
+		rigidbody.velocity = Vector3.zero;
+	}
 }
