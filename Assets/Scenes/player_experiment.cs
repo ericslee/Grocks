@@ -39,7 +39,6 @@ public class player_experiment : MonoBehaviour {
 	public ParticleSystem theSweat;
 
 	GameManager gameManager;
-	public GameObject sittingOn;
 
 	// Use this for initialization
 	void Start () {
@@ -93,10 +92,6 @@ public class player_experiment : MonoBehaviour {
 		}
 
 		if (!gameManager.controlsFrozen) {
-			if (sittingOn == null) {
-				Debug.Log("calling from " + tag);
-				inAir = true;
-			}
 			
 			// move left and right
 			if (Input.GetKey (keyLeft)) {
@@ -186,57 +181,34 @@ public class player_experiment : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision hit) {
-
-		if (sittingOn == null) {
-			Debug.Log("calling from " + tag);
-			inAir = true;
-		}
-		
 		
 		if (hit.collider.tag == "Floor" || hit.collider.tag == "Ceiling") {
-			Debug.Log("setting sittingOn!");
-			sittingOn = hit.gameObject;
-		}
 
-		float otherY = hit.transform.position.y;
-		float thisY = this.gameObject.transform.position.y;
-		// get heights of objects
-		float otherH = hit.transform.localScale.y / 2;
-		float thisH = this.transform.localScale.y / 2;
-		
-		bool collidingOnSide = false;
-		
-		if (Mathf.Abs(thisY - otherY) + 0.1 < thisH + otherH) {
-			//Debug.Log(thisH + otherH + " height difference"); // TODO
-			//Debug.Log(Mathf.Abs(thisY - otherY) + 0.1 + " centerpoint difference"); // TODO
-			collidingOnSide = true;
+			float otherY = hit.transform.position.y;
+			float thisY = this.gameObject.transform.position.y;
+			// get heights of objects
+			float otherH = hit.transform.localScale.y / 2;
+			float thisH = this.transform.localScale.y / 2;
+			
+			bool collidingOnSide = false;
+			
+			if (Mathf.Abs(thisY - otherY) + 0.1 < thisH + otherH) {
+				collidingOnSide = true;
+				inAir = false;
+				hit.gameObject.GetComponent<box_collision_experiment>().sittingOnMe = gameObject;
+			}
 		}
 
 		// handle player/player collisions
 		if (isOpponent(hit.collider.tag) && inAir) {
-			if (hit.collider.GetComponent<player_experiment>().inAir == false){
-				inAir = false;
-				Debug.Log("passing in " + hit.gameObject.tag);
-				playersStacked(hit.gameObject);
-				if (hit.collider.GetComponent<player_experiment>().sittingOn == null) {
-					hit.collider.GetComponent<player_experiment>().inAir = true;
-				}
-				//inAir = false;
-
+			inAir = false;
+			if (hit.gameObject.GetComponent<player_experiment>().inAir == false){
+				gameManager.damagePropagate();
+				//hit.gameObject.GetComponent<player_experiment>().inAir = true;
 			}
 		}
 
 		strugglinTimer = 25.0f;
-	}
-
-	void playersStacked(GameObject opponent) {
-		if (opponent.GetComponent<player_experiment>().sittingOn == null) {
-			Debug.Log ("enemy isn't sitting on anything anymore...");
-			opponent.GetComponent<player_experiment>().inAir = true;
-			Debug.Log ("enemy should now be falling...");
-			return;
-		}
-		opponent.GetComponent<player_experiment>().sittingOn.GetComponent<box_collision_experiment>().manualDamage();
 	}
 
 	void OnTriggerEnter (Collider other) {

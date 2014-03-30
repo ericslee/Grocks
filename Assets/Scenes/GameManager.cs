@@ -92,7 +92,37 @@ public class GameManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
+	}
+
+	public void damagePropagate() {
+		if (!player1.GetComponent<player_experiment>().inAir &&
+		    !player2.GetComponent<player_experiment>().inAir) {
+			Transform[] sittings;
+			sittings = floor.GetComponentsInChildren<Transform>();
+			for (int i = 0; i < sittings.Length; i++) {
+				if (sittings[i].tag != "Floor") continue;
+				if (sittings[i].GetComponent<box_collision_experiment>().sittingOnMe == null) continue;
+				string tag = sittings[i].GetComponent<box_collision_experiment>().sittingOnMe.tag;
+				if (tag == "Player1" || tag == "Player2") {
+					sittings[i].GetComponent<box_collision_experiment>().manualDamage();
+					if (sittings[i].GetComponent<box_collision_experiment>().HP == 0) {
+						sittings[i].GetComponent<box_collision_experiment>().sittingOnMe.GetComponent<player_experiment>().inAir = true;
+					}
+				}
+			}
+			sittings = ceiling.GetComponentsInChildren<Transform>();
+			for (int i = 0; i < sittings.Length; i++) {
+				if (sittings[i].tag != "Ceiling") continue;
+				if (sittings[i].GetComponent<box_collision_experiment>().sittingOnMe == null) continue;
+				string tag = sittings[i].GetComponent<box_collision_experiment>().sittingOnMe.tag;
+				if (tag == "Player1" || tag == "Player2") {
+					sittings[i].GetComponent<box_collision_experiment>().manualDamage();
+					if (sittings[i].GetComponent<box_collision_experiment>().HP == 0) {
+						sittings[i].GetComponent<box_collision_experiment>().sittingOnMe.GetComponent<player_experiment>().inAir = true;
+					}
+				}
+			}
+		}
 	}
 
 	public void setCurrentWinner(string thisGuyWins) {

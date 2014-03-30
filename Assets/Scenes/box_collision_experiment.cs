@@ -19,10 +19,13 @@ public class box_collision_experiment : MonoBehaviour {
 	public Material terrain3_ceiling;
 	public Material terrain4_ceiling;
 
+	public GameObject sittingOnMe;
+
 	// Use this for initialization
 	void Start () {
 		HPmax = HP;
 		if (HP == 0) HPmax = 1;
+		sittingOnMe = null;
 	}
 	
 	// Update is called once per frame
@@ -33,6 +36,7 @@ public class box_collision_experiment : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter(Collision hit) {
+		sittingOnMe = hit.gameObject;
 		/* calculate difference between center of this and center of collision object */
 		// get center point Ys
 		sitter = hit.gameObject;
@@ -74,6 +78,10 @@ public class box_collision_experiment : MonoBehaviour {
 			if(gameObject.tag == "Floor") renderer.material = terrain4;
 			else renderer.material = terrain4_ceiling;
 		}
+	}
+
+	void OnCollisionExit (Collision hit) {
+		sittingOnMe = null;
 	}
 
 	public void manualDamage() {
