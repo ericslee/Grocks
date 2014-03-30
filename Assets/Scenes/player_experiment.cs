@@ -15,6 +15,17 @@ public class player_experiment : MonoBehaviour {
 
 	private string[] opponents;
 
+	// Face materials
+	public Material EricHappy;
+	public Material EricAngry;
+	public Material EricStruggle;
+	public Material EricStunned;
+
+	public Material GaryHappy;
+	public Material GaryAngry;
+	public Material GaryStruggle;
+	public Material GaryStunned;
+
 	// Use this for initialization
 	void Start () {
 		if (tag == "Player1") dir = -1;
@@ -77,6 +88,16 @@ public class player_experiment : MonoBehaviour {
 			//rigidbody.AddForce(0, -500.0f, 0);
 			dir = -1;
 			inAir = true;
+		}
+
+		// change face material based on situation
+		if(inAir) {
+			if(tag == "Player1") renderer.material = EricAngry;
+			if(tag == "Player2") renderer.material = GaryAngry;
+		}
+		else {
+			if(tag == "Player1") renderer.material = EricHappy;
+			if(tag == "Player2") renderer.material = GaryHappy;
 		}
 	}
 
