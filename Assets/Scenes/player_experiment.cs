@@ -238,4 +238,11 @@ public class player_experiment : MonoBehaviour {
 		bounceTimer = 0;
 		rigidbody.velocity = Vector3.zero;
 	}
+
+	public void playDeathSound() {
+		if (tag == "Player1")
+			AudioSource.PlayClipAtPoint (deathLow, transform.position);
+		else if (tag == "Player2")
+			AudioSource.PlayClipAtPoint(deathHi,transform.position);
+	}
 }
