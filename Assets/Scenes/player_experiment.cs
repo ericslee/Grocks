@@ -45,6 +45,8 @@ public class player_experiment : MonoBehaviour {
 	public AudioClip deathLow;
 	public AudioClip struggleHi;
 	public AudioClip struggleLow;
+
+	public bool won;
 	
 	// Use this for initialization
 	void Start () {
@@ -52,6 +54,7 @@ public class player_experiment : MonoBehaviour {
 		if (tag == "Player2") dir = 1;
 		inAir = false;
 		bounceTimer = 0;
+		won = false;
 
 		// Assign player keys, set opponents
 		if(tag == "Player1") {
@@ -76,6 +79,10 @@ public class player_experiment : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (won) {
+			hop();
+			return;
+		}
 
 		isStrugglin = false;
 
@@ -272,5 +279,17 @@ public class player_experiment : MonoBehaviour {
 			AudioSource.PlayClipAtPoint (deathLow, transform.position);
 		else if (tag == "Player2")
 			AudioSource.PlayClipAtPoint(deathHi,transform.position);
+	}
+
+	void hop() {
+		if (!won) return;
+		if (bounceTimer < 0) bounceTimer = 20;
+		if(tag == "Player1") renderer.material = EricHappy;
+		if(tag == "Player2") renderer.material = GaryHappy;
+		inAir = false;
+		Vector3 shift = new Vector3(0.0f, 5.0f, 0.0f);
+		if (bounceTimer < 10) rigidbody.MovePosition(rigidbody.position + shift);
+		else rigidbody.MovePosition(rigidbody.position - shift);
+		bounceTimer--;
 	}
 }
