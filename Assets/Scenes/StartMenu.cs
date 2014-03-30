@@ -33,11 +33,11 @@ public class StartMenu : MonoBehaviour {
 //		GUI.Label(new Rect (screenCenterX-titleWidth/2, screenCenterY-titleHeight/2, titleWidth, titleHeight), 
 //		          "GROCKS");
 
-		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 285, buttonWidth, buttonHeight), "Start")) {
+		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 2*Screen.height/3, buttonWidth, buttonHeight), "Start")) {
 			Application.LoadLevel("Arena_Eric");
 		}
 
-		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 345, buttonWidth, buttonHeight), "Quit")) {
+		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 2*Screen.height/3 + 60, buttonWidth, buttonHeight), "Quit")) {
 			Application.Quit();
 		}
 	}
