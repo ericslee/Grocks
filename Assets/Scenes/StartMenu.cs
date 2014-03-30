@@ -34,6 +34,7 @@ public class StartMenu : MonoBehaviour {
 
 		// HORIZONTAL BUTTON LAYOUT
 		if(GUI.Button(new Rect(startX, startY, buttonWidth, buttonHeight), "Start")) {
+			AudioSource.PlayClipAtPoint(BOOMClip, transform.position);
 			Application.LoadLevel("Arena_Eric");
 		}
 		
