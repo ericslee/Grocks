@@ -40,10 +40,6 @@ public class player_experiment : MonoBehaviour {
 
 	GameManager gameManager;
 
-	// DEATH CRIES
-	public AudioClip deathHi;
-	public AudioClip deathLow;
-
 	// Use this for initialization
 	void Start () {
 		if (tag == "Player1") dir = -1;
@@ -206,7 +202,23 @@ public class player_experiment : MonoBehaviour {
 		// handle player/player collisions
 		if (isOpponent(hit.collider.tag) && inAir) {
 			inAir = false;
+
+			float otherY = hit.transform.position.y;
+			float thisY = this.gameObject.transform.position.y;
+			// get heights of objects
+			float otherH = hit.transform.localScale.y / 2;
+			float thisH = this.transform.localScale.y / 2;
+			
+			bool collidingOnSide = false;
+
+			if (Mathf.Abs(thisY - otherY) + 0.1 < thisH + otherH) {
+				collidingOnSide = true;
+				inAir = true;
+				return;
+			}
+			
 			if (hit.gameObject.GetComponent<player_experiment>().inAir == false){
+				Debug.Log("breaking on " + hit.collider.tag);
 				gameManager.damagePropagate();
 				//hit.gameObject.GetComponent<player_experiment>().inAir = true;
 			}
