@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour {
 	private int player1Score;
 	private int player2Score;
 
+	private GameObject player1ScoreText;
+	private GameObject player2ScoreText;
+
 	// Use this for initialization
 	void Start () {
 		replayMenu = (GameObject)(GameObject.Instantiate(replayMenuPrefab));
@@ -40,6 +43,9 @@ public class GameManager : MonoBehaviour {
 
 		player1Score = 0;
 		player2Score = 0;
+
+		player1ScoreText = GameObject.Find("Player 1 Score");
+		player2ScoreText = GameObject.Find("Player 2 Score");
 
 		Reset();
 	}
@@ -152,8 +158,16 @@ public class GameManager : MonoBehaviour {
 	public void setCurrentWinner(string thisGuyWins) {
 		if (!roundHasWinner) {
 			roundHasWinner = true;
-			if (thisGuyWins == "Player 1") player1Score++;
-			else if (thisGuyWins == "Player 2") player2Score++;
+			if (thisGuyWins == "Player 1") {
+				player1Score++;
+				if (player1Score == 1) player1ScoreText.guiText.text = "I";
+				else if (player1Score == 2) player1ScoreText.guiText.text = "II";
+			}
+			else if (thisGuyWins == "Player 2") {
+				player2Score++;
+				if (player2Score == 1) player2ScoreText.guiText.text = "I";
+				else if (player2Score == 2) player2ScoreText.guiText.text = "II";
+			}
 
 			if (currentRound == totalRounds || player1Score == 2 || player2Score == 2) {
 				replayMenu.GetComponent<ReplayMenu> ().SetCurrentWinner (thisGuyWins);
