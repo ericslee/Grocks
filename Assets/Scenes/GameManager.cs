@@ -23,13 +23,6 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		replayMenu = (GameObject)(GameObject.Instantiate(replayMenuPrefab));
-
-		ceiling = (GameObject)(GameObject.Instantiate(ceilingSetPrefab));
-		floor = (GameObject)(GameObject.Instantiate(floorSetPrefab));
-
-		player1 = (GameObject)(GameObject.Instantiate(player1Prefab));
-		player2 = (GameObject)(GameObject.Instantiate(player2Prefab));
-
 		roundHasWinner = false;
 		controlsFrozen = true;
 		HideReplayMenu();
@@ -42,26 +35,21 @@ public class GameManager : MonoBehaviour {
 		roundHasWinner = false;
 		controlsFrozen = true;
 
-		Destroy(ceiling);
-		Destroy(floor);
+		if (ceiling) Destroy(ceiling);
+		if (floor) Destroy(floor);
 
 		ceiling = (GameObject)(GameObject.Instantiate(ceilingSetPrefab));
 		floor = (GameObject)(GameObject.Instantiate(floorSetPrefab));
 
-		Destroy(player1);
-		Destroy(player2);
+		if (player1) Destroy(player1);
+		if (player2) Destroy(player2);
 
 		player1 = (GameObject)(GameObject.Instantiate(player1Prefab));
 		player2 = (GameObject)(GameObject.Instantiate(player2Prefab));
 
 		player1.transform.position = new Vector3(-41.0f, 4.0f, -16.0f);
 		player2.transform.position = new Vector3(-41.0f, 4.0f, 16.0f);
-//
-//		player_experiment p1Comp = player1.GetComponent<player_experiment>();
-//		p1Comp.Reset();
-//		player_experiment p2Comp = player2.GetComponent<player_experiment>();
-//		p2Comp.Reset();
-//
+
 		Invoke("ResetAnimation", 2);
 
 		HideReplayMenu();

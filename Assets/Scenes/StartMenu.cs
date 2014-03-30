@@ -26,13 +26,6 @@ public class StartMenu : MonoBehaviour {
 
 		GUI.skin = customSkin;
 
-		// Make a background box
-
-		//GUI.Box(new Rect(10,10,100,90), "START MENU");
-//
-//		GUI.Label(new Rect (screenCenterX-titleWidth/2, screenCenterY-titleHeight/2, titleWidth, titleHeight), 
-//		          "GROCKS");
-
 		int numButtons = 3;
 		int startX = Screen.width/2 - (buttonWidth * 3 / 2);
 		int startY = 2 * Screen.height/3;
@@ -49,18 +42,5 @@ public class StartMenu : MonoBehaviour {
 		if(GUI.Button(new Rect(startX + (buttonWidth * 2) + 11, startY, buttonWidth, buttonHeight), "Quit")) {
 			Application.Quit();
 		}
-
-		// VERTICAL BUTTON LAYOUT
-//		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 2*Screen.height/3 - 50, buttonWidth, buttonHeight), "Start")) {
-//			Application.LoadLevel("Arena_Eric");
-//		}
-//
-//		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 2*Screen.height/3, buttonWidth, buttonHeight), "About")) {
-//			//Application.LoadLevel("About_2");
-//		}
-//
-//		if(GUI.Button(new Rect(screenCenterX-buttonWidth/2, 2*Screen.height/3 + 50, buttonWidth, buttonHeight), "Quit")) {
-//			Application.Quit();
-//		}
 	}
 }
