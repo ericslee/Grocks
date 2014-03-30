@@ -36,16 +36,16 @@ public class player_experiment : MonoBehaviour {
 	private bool isStrugglin;
 	private float strugglinTimer;
 	public GameObject IMSWEATIN;
-	public GameObject theSweat;
+	public ParticleSystem theSweat;
 
 	GameManager gameManager;
-
+	
 	// DEATH CRIES
 	public AudioClip deathHi;
 	public AudioClip deathLow;
 	public AudioClip struggleHi;
 	public AudioClip struggleLow;
-
+	
 	// Use this for initialization
 	void Start () {
 		if (tag == "Player1") dir = -1;
@@ -170,10 +170,10 @@ public class player_experiment : MonoBehaviour {
 
 			// TIME TO SWEAT
 			if(IMSWEATIN && !theSweat) {
-				theSweat = (GameObject)Instantiate(IMSWEATIN, transform.position,
+				theSweat = (ParticleSystem)Instantiate(IMSWEATIN, transform.position,
 				                                  Quaternion.identity);
 				if(theSweat) {
-					Destroy(theSweat, 0.25f);
+					Destroy(theSweat.gameObject, 0.25f);
 				}
 			}
 		}
@@ -218,7 +218,23 @@ public class player_experiment : MonoBehaviour {
 		// handle player/player collisions
 		if (isOpponent(hit.collider.tag) && inAir) {
 			inAir = false;
+
+			float otherY = hit.transform.position.y;
+			float thisY = this.gameObject.transform.position.y;
+			// get heights of objects
+			float otherH = hit.transform.localScale.y / 2;
+			float thisH = this.transform.localScale.y / 2;
+			
+			bool collidingOnSide = false;
+
+			if (Mathf.Abs(thisY - otherY) + 0.1 < thisH + otherH) {
+				collidingOnSide = true;
+				inAir = true;
+				return;
+			}
+			
 			if (hit.gameObject.GetComponent<player_experiment>().inAir == false){
+				Debug.Log("breaking on " + hit.collider.tag);
 				gameManager.damagePropagate();
 				//hit.gameObject.GetComponent<player_experiment>().inAir = true;
 			}
