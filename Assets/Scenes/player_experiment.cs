@@ -27,6 +27,7 @@ public class player_experiment : MonoBehaviour {
 	public Material GaryStunned;
 
 	GameManager gameManager;
+	public GameObject sittingOn;
 
 	// Use this for initialization
 	void Start () {
@@ -69,6 +70,11 @@ public class player_experiment : MonoBehaviour {
 		if (inAir) rigidbody.AddForce(0, dir * 300.0f, 0);
 
 		if (!gameManager.controlsFrozen) {
+			if (sittingOn == null) {
+				Debug.Log("calling from " + tag);
+				inAir = true;
+			}
+			
 			// move left and right
 			if (Input.GetKey (keyLeft) && inAir && bounceTimer < 1) {
 				rigidbody.MovePosition(rigidbody.position + leftSpeed * Time.deltaTime);
@@ -116,6 +122,17 @@ public class player_experiment : MonoBehaviour {
 
 	void OnCollisionEnter (Collision hit) {
 
+		if (sittingOn == null) {
+			Debug.Log("calling from " + tag);
+			inAir = true;
+		}
+		
+		
+		if (hit.collider.tag == "Floor" || hit.collider.tag == "Ceiling") {
+			Debug.Log("setting sittingOn!");
+			sittingOn = hit.gameObject;
+		}
+
 		float otherY = hit.transform.position.y;
 		float thisY = this.gameObject.transform.position.y;
 		// get heights of objects
@@ -131,15 +148,28 @@ public class player_experiment : MonoBehaviour {
 		}
 
 		// handle player/player collisions
-		if (isOpponent(hit.collider.tag)) {
-			if (hit.collider.GetComponent<player_experiment>().collider == false){
+		if (isOpponent(hit.collider.tag) && inAir) {
+			if (hit.collider.GetComponent<player_experiment>().inAir == false){
 				inAir = false;
+				Debug.Log("passing in " + hit.gameObject.tag);
+				playersStacked(hit.gameObject);
+				if (hit.collider.GetComponent<player_experiment>().sittingOn == null) {
+					hit.collider.GetComponent<player_experiment>().inAir = true;
+				}
+				//inAir = false;
+
 			}
 		}
 	}
 
-	void playersStacked(Collider opponent) {
-		inAir = false;
+	void playersStacked(GameObject opponent) {
+		if (opponent.GetComponent<player_experiment>().sittingOn == null) {
+			Debug.Log ("enemy isn't sitting on anything anymore...");
+			opponent.GetComponent<player_experiment>().inAir = true;
+			Debug.Log ("enemy should now be falling...");
+			return;
+		}
+		opponent.GetComponent<player_experiment>().sittingOn.GetComponent<box_collision_experiment>().manualDamage();
 	}
 
 	void OnTriggerEnter (Collider other) {
