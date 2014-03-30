@@ -40,6 +40,10 @@ public class player_experiment : MonoBehaviour {
 
 	GameManager gameManager;
 
+	// DEATH CRIES
+	public AudioClip deathHi;
+	public AudioClip deathLow;
+
 	// Use this for initialization
 	void Start () {
 		if (tag == "Player1") dir = -1;
